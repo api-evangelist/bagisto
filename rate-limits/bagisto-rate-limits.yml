@@ -1,0 +1,36 @@
+name: Bagisto API Rate Limits
+description: Bagisto REST API rate limits apply per API key. Public Storefront API keys are subject to a default limit of 100 requests per minute. Admin API tokens and customer-scoped tokens may be configured by the hosting operator. Self-hosted deployments can customize rate limits via Laravel middleware.
+url: https://api-docs.bagisto.com/api/authentication
+limits:
+  - name: Storefront API (Public)
+    description: Default rate limit for read-only public storefront access using X-STOREFRONT-KEY header.
+    requests: 100
+    period: minute
+    per: key
+    scope: public
+    notes: Configured in Laravel middleware; self-hosted operators may adjust this limit.
+  - name: Customer API
+    description: Authenticated customer endpoints using Bearer token plus X-STOREFRONT-KEY.
+    requests: 100
+    period: minute
+    per: key
+    scope: customer
+    notes: Inherits Storefront key rate limit; admin-configurable on self-hosted instances.
+  - name: Admin API
+    description: Full administrative access using pre-issued Integration Bearer token.
+    requests: 100
+    period: minute
+    per: token
+    scope: admin
+    notes: Self-hosted deployments can adjust via Laravel Throttle middleware configuration.
+headers:
+  - name: X-STOREFRONT-KEY
+    description: Storefront API key required for all public shop endpoints. Format - pk_storefront_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  - name: Authorization
+    description: Bearer token for customer and admin authenticated endpoints.
+  - name: X-LOCALE
+    description: Optional locale header to specify response language.
+  - name: X-CURRENCY
+    description: Optional currency header to override default pricing currency.
+  - name: X-CHANNEL
+    description: Optional channel header to select a specific sales channel.

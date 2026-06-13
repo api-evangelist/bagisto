@@ -1,0 +1,43 @@
+name: Bagisto Plans and Pricing
+description: Bagisto is a free and open-source Laravel e-commerce platform. The core platform is MIT-licensed and free to self-host. Commercial cloud-hosted managed plans are available for teams that want a fully managed deployment.
+url: https://bagisto.com/en/cloud-hosting/
+plans:
+  - name: Open Source (Self-Hosted)
+    description: Free MIT-licensed core platform, self-hosted on your own infrastructure.
+    price: 0
+    currency: USD
+    billing: one-time
+    features:
+      - Full REST API access
+      - GraphQL API access
+      - Product and catalog management
+      - Order and inventory management
+      - Multi-store and multi-currency support
+      - Headless commerce support
+      - Community support via forums
+  - name: Starter Pack (Cloud)
+    description: Fully managed cloud deployment with 99.5% uptime SLA and community email support.
+    price: contact
+    currency: USD
+    billing: monthly
+    features:
+      - Fully managed deployment
+      - Managed server access
+      - 99.5% uptime SLA
+      - 30-day automated backups
+      - Standard email support
+      - Paid migration assistance
+      - REST API access
+  - name: Pro Pack (Cloud)
+    description: Fully managed cloud deployment with 99.9% uptime SLA and advanced email support.
+    price: contact
+    currency: USD
+    billing: monthly
+    features:
+      - Fully managed deployment
+      - Managed server access
+      - 99.9% uptime SLA
+      - 15-day automated backups
+      - Advanced email support
+      - Paid migration assistance
+      - REST API access

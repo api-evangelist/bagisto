@@ -1,0 +1,38 @@
+name: Bagisto FinOps
+description: Bagisto is a free open-source platform (MIT license) with no direct API usage fees for self-hosted deployments. Cost drivers are infrastructure, optional commercial cloud hosting plans, and third-party extension purchases. API calls do not carry per-request charges on any plan.
+url: https://bagisto.com/en/cloud-hosting/
+model: open-source
+cost_drivers:
+  - name: Self-Hosted Infrastructure
+    description: Compute, storage, and bandwidth costs for running Bagisto on your own servers or cloud VMs.
+    type: infrastructure
+    unit: varies
+    notes: No API call fees. Costs depend on chosen cloud provider and instance sizing.
+  - name: Managed Cloud Hosting - Starter Pack
+    description: Fully managed Bagisto hosting with 99.5% SLA, 30-day backups, and standard support.
+    type: subscription
+    unit: monthly
+    price: contact
+    notes: Pricing available on request from Bagisto sales team.
+  - name: Managed Cloud Hosting - Pro Pack
+    description: Fully managed Bagisto hosting with 99.9% SLA, 15-day backups, and advanced support.
+    type: subscription
+    unit: monthly
+    price: contact
+    notes: Pricing available on request from Bagisto sales team.
+  - name: Commercial Extensions and Themes
+    description: Paid marketplace extensions for ERP, CRM, payment gateways, shipping integrations, and themes.
+    type: one-time or subscription
+    unit: per extension
+    notes: Available via the Bagisto Marketplace. Prices vary by vendor and extension.
+  - name: Support and Maintenance Services
+    description: Optional paid support contracts for bug fixes, security patches, and dedicated assistance.
+    type: subscription
+    unit: monthly or annual
+    notes: See https://bagisto.com/en/support-maintenance-services/ for details.
+optimization_tips:
+  - Leverage caching (Redis/Memcached) to reduce API call volume and infrastructure costs.
+  - Use pagination parameters to limit response payloads and reduce bandwidth.
+  - Self-host on auto-scaling infrastructure to match traffic patterns.
+  - Monitor API usage via Laravel Telescope or application performance monitoring tools.
+  - Use X-LOCALE and X-CHANNEL headers to scope requests and avoid over-fetching data.
