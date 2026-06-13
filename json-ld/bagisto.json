@@ -1,0 +1,86 @@
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "@id": "https://bagisto.com/en/",
+  "name": "Bagisto",
+  "description": "Bagisto is a free and open-source Laravel e-commerce platform that provides REST and GraphQL APIs for managing products, categories, customers, orders, inventory, carts, and multi-channel selling.",
+  "url": "https://bagisto.com/en/",
+  "applicationCategory": "E-Commerce",
+  "operatingSystem": "Linux, macOS, Windows",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock"
+  },
+  "license": "https://opensource.org/licenses/MIT",
+  "codeRepository": "https://github.com/bagisto/bagisto",
+  "programmingLanguage": "PHP",
+  "runtimePlatform": "Laravel",
+  "keywords": [
+    "e-commerce",
+    "laravel",
+    "open-source",
+    "headless-commerce",
+    "REST API",
+    "GraphQL",
+    "multi-channel",
+    "products",
+    "orders",
+    "customers",
+    "inventory"
+  ],
+  "sameAs": [
+    "https://github.com/bagisto",
+    "https://github.com/bagisto/bagisto",
+    "https://www.linkedin.com/company/bagisto/",
+    "https://x.com/BagistoShop"
+  ],
+  "potentialAction": [
+    {
+      "@type": "ReadAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://api-docs.bagisto.com/api/rest-api/introduction.html",
+        "description": "Bagisto REST API documentation"
+      }
+    },
+    {
+      "@type": "ReadAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://devdocs.bagisto.com/api/graphql-api",
+        "description": "Bagisto GraphQL API documentation"
+      }
+    }
+  ],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://devdocs.bagisto.com/",
+    "name": "Bagisto Developer Documentation",
+    "url": "https://devdocs.bagisto.com/"
+  },
+  "hasPart": [
+    {
+      "@type": "WebAPI",
+      "name": "Bagisto REST API",
+      "description": "RESTful API for managing all Bagisto e-commerce operations including products, categories, customers, orders, inventory, cart, checkout, and administrative functions. Secured with Laravel Sanctum tokens.",
+      "documentation": "https://api-docs.bagisto.com/api/rest-api/introduction.html",
+      "termsOfService": "https://bagisto.com/en/",
+      "provider": {
+        "@type": "Organization",
+        "name": "Bagisto"
+      }
+    },
+    {
+      "@type": "WebAPI",
+      "name": "Bagisto GraphQL API",
+      "description": "GraphQL API for Bagisto providing flexible query-based access to storefront and catalog data as an alternative to the REST API.",
+      "documentation": "https://devdocs.bagisto.com/api/graphql-api",
+      "provider": {
+        "@type": "Organization",
+        "name": "Bagisto"
+      }
+    }
+  ]
+}
