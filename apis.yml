@@ -1,82 +1,92 @@
 aid: bagisto
 name: Bagisto
-description: Bagisto is a free and open-source Laravel e-commerce platform that provides REST and GraphQL APIs for managing products, categories, customers, orders, inventory, carts, and multi-channel selling. Built on Laravel Sanctum, the API offers both a public Storefront API and a full-control Admin API, making it suitable for headless commerce, mobile apps, and third-party integrations.
+description: Bagisto is a free and open-source Laravel e-commerce platform that provides
+  REST and GraphQL APIs for managing products, categories, customers, orders, inventory,
+  carts, and multi-channel selling. Built on Laravel Sanctum, the API offers both
+  a public Storefront API and a full-control Admin API, making it suitable for headless
+  commerce, mobile apps, and third-party integrations.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/bagisto/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
 specificationVersion: '0.19'
 tags:
+- E-Commerce
+- Laravel
+- Open Source
+- Products
+- Orders
+- Customers
+- Inventory
+- Multi-Channel
+- Headless Commerce
+apis:
+- name: Bagisto REST API
+  description: RESTful API for managing all Bagisto e-commerce operations including
+    products, categories, customers, orders, inventory, cart, checkout, and administrative
+    functions. Provides separate Shop and Admin API namespaces secured with Laravel
+    Sanctum tokens.
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://api-docs.bagisto.com/api/rest-api/introduction.html
+  baseURL: https://{your-domain}/api/
+  tags:
   - E-Commerce
-  - Laravel
-  - Open Source
   - Products
   - Orders
   - Customers
   - Inventory
-  - Multi-Channel
-  - Headless Commerce
-apis:
-  - name: Bagisto REST API
-    description: RESTful API for managing all Bagisto e-commerce operations including products, categories, customers, orders, inventory, cart, checkout, and administrative functions. Provides separate Shop and Admin API namespaces secured with Laravel Sanctum tokens.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://api-docs.bagisto.com/api/rest-api/introduction.html
-    baseURL: https://{your-domain}/api/
-    tags:
-      - E-Commerce
-      - Products
-      - Orders
-      - Customers
-      - Inventory
-      - Cart
-      - REST
-    properties:
-      - type: Documentation
-        url: https://api-docs.bagisto.com/api/rest-api/introduction.html
-      - type: Authentication
-        url: https://api-docs.bagisto.com/api/authentication
-      - type: OpenAPI
-        url: https://devdocs.bagisto.com/api/rest-api.html
-  - name: Bagisto GraphQL API
-    description: GraphQL API for Bagisto providing flexible query-based access to storefront and catalog data as an alternative to the REST API.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://devdocs.bagisto.com/api/graphql-api
-    baseURL: https://{your-domain}/graphql
-    tags:
-      - E-Commerce
-      - GraphQL
-      - Products
-      - Catalog
-    properties:
-      - type: Documentation
-        url: https://devdocs.bagisto.com/api/graphql-api
-common:
-  - type: Website
-    url: https://bagisto.com/en/
+  - Cart
+  - REST
+  properties:
   - type: Documentation
-    url: https://devdocs.bagisto.com/
-  - type: GitHubOrg
-    url: https://github.com/bagisto
-  - type: GitHubRepository
-    url: https://github.com/bagisto/bagisto
-  - type: GitHubRepository
-    url: https://github.com/bagisto/rest-api
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/bagisto/
-  - type: Blog
-    url: https://bagisto.com/en/blog/
-  - type: Pricing
-    url: https://bagisto.com/en/cloud-hosting/
-  - type: X
-    url: https://x.com/BagistoShop
-  - type: Forum
-    url: https://forums.bagisto.com/
-  - type: Plans
-    url: plans/bagisto-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/bagisto-rate-limits.yml
-  - type: FinOps
-    url: finops/bagisto-finops.yml
+    url: https://api-docs.bagisto.com/api/rest-api/introduction.html
+  - type: Authentication
+    url: https://api-docs.bagisto.com/api/authentication
+  - type: OpenAPI
+    url: https://devdocs.bagisto.com/api/rest-api.html
+- name: Bagisto GraphQL API
+  description: GraphQL API for Bagisto providing flexible query-based access to storefront
+    and catalog data as an alternative to the REST API.
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://devdocs.bagisto.com/api/graphql-api
+  baseURL: https://{your-domain}/graphql
+  tags:
+  - E-Commerce
+  - GraphQL
+  - Products
+  - Catalog
+  properties:
+  - type: Documentation
+    url: https://devdocs.bagisto.com/api/graphql-api
+  - url: graphql/bagisto-graphql.md
+    type: GraphQL
+common:
+- type: Website
+  url: https://bagisto.com/en/
+- type: Documentation
+  url: https://devdocs.bagisto.com/
+- type: GitHubOrg
+  url: https://github.com/bagisto
+- type: GitHubRepository
+  url: https://github.com/bagisto/bagisto
+- type: GitHubRepository
+  url: https://github.com/bagisto/rest-api
+- type: LinkedIn
+  url: https://www.linkedin.com/company/bagisto/
+- type: Blog
+  url: https://bagisto.com/en/blog/
+- type: Pricing
+  url: https://bagisto.com/en/cloud-hosting/
+- type: X
+  url: https://x.com/BagistoShop
+- type: Forum
+  url: https://forums.bagisto.com/
+- type: Plans
+  url: plans/bagisto-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/bagisto-rate-limits.yml
+- type: FinOps
+  url: finops/bagisto-finops.yml
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

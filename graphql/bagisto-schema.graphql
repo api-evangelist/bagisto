@@ -1,0 +1,2438 @@
+# Bagisto GraphQL API Schema
+# Source: https://github.com/bagisto/headless-ecommerce/tree/main/src/graphql
+# Package: bagisto/headless-ecommerce (Lighthouse-based GraphQL server)
+# Retrieved: 2026-06-14
+
+# ---------------------------------------------------------------------------
+# Scalars
+# ---------------------------------------------------------------------------
+
+"A date string with format `Y-m-d`, e.g. `2011-05-23`."
+scalar Date
+
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime
+
+"Multipart file upload (graphql-multipart-request-spec)."
+scalar Upload
+
+"A JSON object or value (string, number, boolean, array, or null)."
+scalar JSON
+
+# ---------------------------------------------------------------------------
+# Enums
+# ---------------------------------------------------------------------------
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum UploadType {
+  FILE
+  PATH
+  BASE64
+}
+
+enum AttributeType {
+  TEXT
+  TEXTAREA
+  PRICE
+  BOOLEAN
+  SELECT
+  MULTISELECT
+  DATETIME
+  DATE
+  IMAGE
+  FILE
+  CHECKBOX
+}
+
+enum AttributeGroupColumn {
+  MAIN
+  RIGHT_SIDE
+}
+
+enum ReviewStatus {
+  APPROVED
+  DISAPPROVED
+  PENDING
+}
+
+enum RentingTypeEnumForCart {
+  HOURLY
+  DAILY
+}
+
+enum UpdateCustomizableOptionInputTypeEnum {
+  TEXT
+  TEXTAREA
+  CHECKBOX
+  RADIO
+  SELECT
+  MULTISELECT
+  DATE
+  DATETIME
+  TIME
+  FILE
+}
+
+# ---------------------------------------------------------------------------
+# Root types
+# ---------------------------------------------------------------------------
+
+type Query {
+  # --- Admin: Catalog — Products ---
+  products(input: FilterProductsInput): ProductPaginatorResponse!
+  product(id: ID): Product
+
+  # --- Admin: Catalog — Categories ---
+  categories(input: FilterCategoryListInput): [Category!]
+  category(id: ID): Category
+
+  # --- Admin: Catalog — Attributes ---
+  attributes(input: FilterAttributesInput): [Attribute!]
+  attribute(id: ID): Attribute
+  attributeOptions: [AttributeOption!]
+  attributeOption(id: ID): AttributeOption
+  attributeTranslations: [AttributeTranslation!]
+  attributeTranslation(id: ID): AttributeTranslation
+  attributeOptionTranslations: [AttributeOptionTranslation!]
+  attributeOptionTranslation(id: ID): AttributeOptionTranslation
+  filterableAttributes: [Attribute!]
+
+  # --- Admin: Catalog — Attribute Families ---
+  attributeGroups: [AttributeGroup!]
+  attributeGroup(id: ID): AttributeGroup
+  attributeFamilies(input: FilterAttributeFamiliesInput): [AttributeFamily!]
+  attributeFamily(id: ID): AttributeFamily
+
+  # --- Admin: Sales — Orders ---
+  orders(input: FilterOrderInput): [Order!]
+  order(id: ID): Order
+  orderInvoices(input: FilterOrderInvoiceInput): [Invoice!]
+  orderInvoice(id: ID): Invoice
+  orderShipments(input: FilterOrderShipmentInput): [Shipment!]
+  orderShipment(id: ID): Shipment
+  orderRefunds(input: FilterOrderRefundInput): [Refund!]
+  orderRefund(id: ID): Refund
+
+  # --- Admin: Sales — Invoices ---
+  invoices(input: FilterInvoiceInput): [Invoice!]
+  invoice(id: ID): Invoice
+  invoiceItems(input: FilterInvoiceItemInput): [InvoiceItem!]
+  invoiceItem(id: ID, input: FilterInvoiceItemInput): InvoiceItem
+
+  # --- Admin: Sales — Shipments ---
+  shipments(input: FilterShipmentInput): [Shipment!]
+  shipment(id: ID): Shipment
+  shipmentItems(input: FilterShipmentItemInput): [ShipmentItem!]
+  shipmentItem(id: ID, input: FilterShipmentItemInput): ShipmentItem
+
+  # --- Admin: Customers ---
+  customers(input: FilterCustomerInput): [Customer!]
+  customer(id: ID): Customer
+
+  # --- Admin: Customer Reviews ---
+  reviews(input: FilterReviewInput): [Review!]
+  review(id: ID): Review
+
+  # --- Admin: CMS ---
+  cmsPages(input: FilterCmsPageInput): [CmsPage!]
+  cmsPage(id: ID): CmsPage
+
+  # --- Admin: Settings ---
+  channels(input: FilterChannelInput): [Channel!]
+  channel(id: ID): Channel
+  inventorySources(input: FilterInventorySourceInput): [InventorySource!]
+  inventorySource(id: ID): InventorySource
+  taxRates(input: FilterTaxRateInput): [TaxRate!]
+  taxRate(id: ID): TaxRate
+  taxCategories(input: FilterTaxCategoryInput): [TaxCategory!]
+  taxCategory(id: ID): TaxCategory
+
+  # --- Shop: Authentication / Account ---
+  accountInfo: Customer
+
+  # --- Shop: Cart ---
+  cartDetail: Cart
+  cartItems: [CartItem!]
+  getSlots(id: ID!, date: String!): [AvailableBookingSlot]
+
+  # --- Shop: Wishlist ---
+  wishlists(input: FilterWishlistInput): [Wishlist!]
+  wishlist(id: ID): Wishlist
+
+  # --- Shop: Orders ---
+  ordersList(input: FilterCustomerOrderInput): [Order!]
+  orderDetail(id: ID!): Order
+  viewInvoices(input: OrderInvoiceInput): [Invoice!]
+  viewInvoice(id: ID): Invoice
+  viewShipments(input: OrderShipmentInput): [Shipment!]
+  viewShipment(id: ID): Shipment
+  viewRefunds(input: OrderRefundInput): [Refund!]
+  viewRefund(id: ID): Refund
+
+  # --- Shop: Browse / Catalog ---
+  getDefaultChannel: Channel
+  themeCustomization: [ShopTheme!]
+  homeCategories(getCategoryTree: Boolean, input: [FilterHomeCategoriesInput]): [Category!]
+  allProducts(input: [FilterHomeCategoriesInput]): ProductPaginatorResponse!
+  getFilterAttribute(categorySlug: String!): FilterAttribute
+}
+
+type Mutation {
+  # --- Shop: Session ---
+  customerLogin(input: LoginInput!): CustomerLoginResponse
+  customerLogout: StatusResponse
+
+  # --- Shop: Registration ---
+  customerRegister(input: RegisterCustomerInput!): CustomerResponse
+
+  # --- Shop: Account ---
+  updateAccount(input: UpdateAccountInput!): CustomerResponse
+  deleteAccount(password: String!): StatusResponse
+
+  # --- Shop: Cart ---
+  addItemToCart(input: AddItemToCartInput!): CartItemResponse
+  updateItemToCart(input: UpdateItemToCartInput!): CartItemResponse
+  removeCartItem(id: ID!): CartItemResponse
+  removeAllCartItem: StatusResponse
+  moveToWishlist(id: ID!): CartItemResponse
+
+  # --- Shop: Checkout ---
+  applyCoupon(input: ApplyCouponInput!): CouponResponse
+  removeCoupon: CouponResponse
+
+  # --- Shop: Wishlist ---
+  addToWishlist(productId: ID!): WishlistResponse
+  removeFromWishlist(productId: ID!): WishlistResponse
+  moveToCart(id: ID!, quantity: Int!): WishlistResponse
+  removeAllWishlists: StatusResponse
+
+  # --- Shop: Orders ---
+  cancelCustomerOrder(id: ID!): CancelOrderResponse
+  reorder(id: ID!): CartItemResponse
+
+  # --- Admin: Catalog — Products ---
+  createProduct(input: CreateProductInput!): ProductResponse
+  updateProduct(id: ID!, input: UpdateProductInput!): ProductResponse
+  deleteProduct(id: ID!): StatusResponse
+
+  # --- Admin: Catalog — Categories ---
+  createCategory(input: CreateCategoryInput!): CategoryResponse
+  updateCategory(id: ID!, input: CreateCategoryInput!): CategoryResponse
+  deleteCategory(id: ID!): StatusResponse
+
+  # --- Admin: Catalog — Attributes ---
+  createAttribute(input: CreateAttributeInput!): AttributeResponse
+  updateAttribute(id: ID!, input: CreateAttributeInput!): AttributeResponse
+  deleteAttribute(id: ID!): StatusResponse
+
+  # --- Admin: Catalog — Attribute Families ---
+  createAttributeGroup(input: CreateAttributeGroupInput!): AttributeGroupResponse
+  updateAttributeGroup(id: ID!, input: CreateAttributeGroupInput!): AttributeGroupResponse
+  deleteAttributeGroup(id: ID!): StatusResponse
+  createAttributeFamily(input: CreateAttributeFamilyInput): AttributeFamilyResponse
+  updateAttributeFamily(id: ID!, input: CreateAttributeFamilyInput): AttributeFamilyResponse
+  deleteAttributeFamily(id: ID!): StatusResponse
+
+  # --- Admin: Customers ---
+  createCustomer(input: CreateCustomerInput!): CustomerResponse
+  updateCustomer(id: ID!, input: CreateCustomerInput!): CustomerResponse
+  storeNotes(id: ID!, input: CreateCustomerNoteInput!): NoteResponse
+  deleteCustomer(id: ID!): StatusResponse
+  createOrder(customerId: ID!): OrderResponse
+
+  # --- Admin: Reviews ---
+  updateReview(id: ID!, status: ReviewStatus!): ReviewResponse
+  adminDeleteReview(id: ID!): StatusResponse
+
+  # --- Admin: Sales — Orders ---
+  cancelOrder(id: ID!): CancelOrderResponse
+  adminReorder(id: ID!): OrderResponse
+
+  # --- Admin: Sales — Invoices ---
+  createInvoice(input: CreateInvoiceInput!): InvoiceResponse
+
+  # --- Admin: Sales — Shipments ---
+  createShipment(input: CreateShipmentInput!): ShipmentResponse
+
+  # --- Admin: CMS ---
+  createCmsPage(input: CreateCmsPageInput!): CmsPageResponse
+  updateCmsPage(id: ID!, input: CreateCmsPageInput!): CmsPageResponse
+  deleteCmsPage(id: ID!): StatusResponse
+
+  # --- Admin: Settings ---
+  createChannel(input: CreateChannelInput!): ChannelResponse
+  updateChannel(id: ID!, input: CreateChannelInput!): ChannelResponse
+  deleteChannel(id: ID!): StatusResponse
+  createInventorySource(input: CreateInventorySourceInput!): InventorySourceResponse
+  updateInventorySource(id: ID!, input: CreateInventorySourceInput!): InventorySourceResponse
+  deleteInventorySource(id: ID!): StatusResponse
+  createTaxRate(input: CreateTaxRateInput!): TaxRateResponse
+  updateTaxRate(id: ID!, input: CreateTaxRateInput!): TaxRateResponse
+  deleteTaxRate(id: ID!): StatusResponse
+  createTaxCategory(input: CreateTaxCategoryInput!): TaxCategoryResponse
+  updateTaxCategory(id: ID!, input: CreateTaxCategoryInput!): TaxCategoryResponse
+  deleteTaxCategory(id: ID!): StatusResponse
+}
+
+# ---------------------------------------------------------------------------
+# Common response types
+# ---------------------------------------------------------------------------
+
+type StatusResponse {
+  success: Boolean
+  message: String
+}
+
+type PaginatorInfo {
+  count: Int!
+  currentPage: Int!
+  firstItem: Int
+  hasMorePages: Boolean!
+  lastItem: Int
+  lastPage: Int!
+  perPage: Int!
+  total: Int!
+}
+
+type FormattedPrice {
+  adjustmentFee: String
+  adjustmentRefund: String
+  amountRefunded: String
+  baseAdjustmentFee: String
+  baseAdjustmentRefund: String
+  baseAmountRefunded: String
+  baseDiscount: String
+  baseDiscountAmount: String
+  baseDiscountInvoiced: String
+  baseDiscountRefunded: String
+  baseDiscountedSubTotal: String
+  baseGrandTotal: String
+  baseGrandTotalInvoiced: String
+  baseGrandTotalRefunded: String
+  basePrice: String
+  basePriceInclTax: String
+  baseShippingAmount: String
+  baseShippingAmountInclTax: String
+  baseShippingDiscountAmount: String
+  baseShippingInvoiced: String
+  baseShippingRefunded: String
+  baseShippingTaxAmount: String
+  baseShippingTaxRefunded: String
+  baseSubTotal: String
+  baseSubTotalInclTax: String
+  baseSubTotalInvoiced: String
+  baseTaxAmount: String
+  baseTaxAmountInvoiced: String
+  baseTaxAmountRefunded: String
+  baseTaxTotal: String
+  baseTotal: String
+  baseTotalInclTax: String
+  baseTotalInvoiced: String
+  customPrice: String
+  discount: String
+  discountAmount: String
+  discountInvoiced: String
+  discountRefunded: String
+  discountedSubTotal: String
+  grandTotal: String
+  grandTotalInvoiced: String
+  grandTotalRefunded: String
+  price: String
+  priceInclTax: String
+  shippingAmount: String
+  shippingAmountInclTax: String
+  shippingDiscountAmount: String
+  shippingInvoiced: String
+  shippingRefunded: String
+  shippingTaxAmount: String
+  shippingTaxRefunded: String
+  subTotal: String
+  subTotalInclTax: String
+  subTotalInvoiced: String
+  subTotalRefunded: String
+  taxAmount: String
+  taxAmountInvoiced: String
+  taxAmountRefunded: String
+  taxTotal: String
+  total: String
+  totalInclTax: String
+  totalInvoiced: String
+}
+
+# ---------------------------------------------------------------------------
+# Authentication
+# ---------------------------------------------------------------------------
+
+input LoginInput {
+  email: String
+  password: String
+  remember: Boolean
+  deviceToken: String
+  deviceName: String
+}
+
+input RegisterCustomerInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  passwordConfirmation: String!
+}
+
+type CustomerLoginResponse {
+  success: Boolean
+  message: String
+  accessToken: String
+  tokenType: String
+  expiresIn: Int
+  customer: Customer
+}
+
+# ---------------------------------------------------------------------------
+# Customer
+# ---------------------------------------------------------------------------
+
+type Customer {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  name: String
+  gender: String
+  dateOfBirth: String
+  email: String!
+  phone: String
+  image: String
+  imageUrl: String
+  status: Boolean
+  password: String!
+  apiToken: String
+  customerGroupId: Int
+  channelId: Int
+  subscribedToNewsLetter: Boolean
+  isVerified: Boolean
+  isSuspended: Boolean
+  token: String
+  rememberToken: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  customerGroup: CustomerGroup
+  addresses: [Address]
+  defaultAddress: Address
+  invoices: [Invoice]
+  wishlist: [Wishlist]
+  isWishlistShared: Boolean
+  getWishlistSharedLink: String
+  allCarts: [Cart]
+  inactiveCarts: [Cart]
+  activeCarts: [Cart]
+  orders: [Order]
+  reviews: [Review]
+  notes: [Note]
+  subscription: Subscriber
+}
+
+type CustomerResponse {
+  success: Boolean
+  message: String
+  customer: Customer
+}
+
+type CustomerGroup {
+  id: ID!
+  name: String!
+  code: String!
+  isUserDefined: Boolean
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type Note {
+  id: ID
+  customerId: ID
+  note: String
+  customerNotified: Boolean
+  createdAt: DateTime
+  updatedAt: DateTime
+  customer: Customer
+}
+
+type NoteResponse {
+  success: Boolean
+  message: String
+  note: Note
+}
+
+type Subscriber {
+  id: ID
+  email: String
+  isSubscribed: Boolean
+  token: String
+  channelId: ID
+  customerId: ID
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input FilterCustomerInput {
+  id: Int
+  name: String
+  gender: Gender
+  email: String
+  dateOfBirth: String
+  groupName: String
+  phone: String
+  status: Boolean
+}
+
+input CreateCustomerInput {
+  firstName: String!
+  lastName: String!
+  gender: Gender!
+  email: String!
+  dateOfBirth: String
+  customerGroupId: Int!
+  phone: String
+  status: Boolean
+  isSuspended: Boolean
+}
+
+input CreateCustomerNoteInput {
+  note: String!
+  customerNotified: Boolean
+}
+
+input UpdateAccountInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String!
+  gender: Gender!
+  dateOfBirth: String
+  currentPassword: String
+  newPassword: String
+  newPasswordConfirmation: String
+  newsletterSubscriber: Boolean
+  image: Upload
+}
+
+# ---------------------------------------------------------------------------
+# Address
+# ---------------------------------------------------------------------------
+
+type Address {
+  id: ID!
+  addressType: String
+  parentAddressId: ID
+  customerId: ID
+  cartId: ID
+  orderId: ID
+  firstName: String!
+  lastName: String!
+  gender: Gender
+  companyName: String
+  address: String!
+  city: String!
+  state: String!
+  stateName: String
+  country: String!
+  countryName: String
+  postcode: String!
+  email: String
+  phone: String
+  vatId: String
+  defaultAddress: Boolean
+  useForShipping: Boolean
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type AddressResponse {
+  success: Boolean
+  message: String
+  address: Address
+}
+
+input FilterCustomerAddressInput {
+  id: Int
+  customerId: Int
+  firstName: String
+  lastName: String
+  gender: Gender
+  companyName: String
+  address: String
+  city: String
+  state: String
+  country: String
+  postcode: String
+  email: String
+  phone: String
+  vatId: String
+  defaultAddress: Boolean
+}
+
+# ---------------------------------------------------------------------------
+# Product
+# ---------------------------------------------------------------------------
+
+type Product {
+  id: ID!
+  sku: String!
+  type: String!
+  parentId: ID
+  attributeFamilyId: ID!
+  productNumber: String
+  name: String
+  shortDescription: String
+  description: String
+  urlKey: String
+  shareURL: String
+  new: Boolean
+  featured: Boolean
+  status: Boolean
+  guestCheckout: Boolean
+  visibleIndividually: Boolean
+  metaTitle: String
+  metaKeywords: String
+  metaDescription: String
+  price: Float
+  specialPrice: Float
+  specialPriceFrom: String
+  specialPriceTo: String
+  weight: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+  configutableData: ConfigurableProductData
+  variants: [Product]
+  parent: Product
+  attributeFamily: AttributeFamily!
+  attributeValues: [ProductAttributeValue!]
+  superAttributes: [Attribute!]
+  categories: [Category!]
+  inventories: [Inventory!]
+  channels: [Channel!]
+  images: [Image]
+  cacheBaseImage: [CacheImage]
+  cacheGalleryImages: [CacheImage]
+  videos: [Video!]
+  additionalData: [ProductAdditionalData]
+  isInWishlist: Boolean
+  isInSale: Boolean
+  isSaleable: Boolean
+  priceHtml: ProductPriceHtml
+  orderedInventories: [OrderInventory!]
+  reviews: [Review]
+  averageRating: String
+  percentageRating: [Int]
+  customizableOptions: [ProductCustomizableOption]
+  customerGroupPrices: [CustomerGroupPrice]
+  downloadableSamples: [ProductDownloadableSample]
+  downloadableLinks: [ProductDownloadableLink]
+  groupedProducts: [ProductGroupedProduct]
+  bundleOptions: [ProductBundleOption]
+  relatedProducts: [Product!]
+  upSells: [Product]
+  crossSells: [Product]
+  booking: [BookingProduct]
+  sameDaySlots: [BookingDaySlots!]
+  differentDaySlots: [BookingDaySlots!]
+}
+
+type ProductPaginatorResponse {
+  paginatorInfo: PaginatorInfo!
+  data: [Product!]
+}
+
+type ProductResponse {
+  success: Boolean
+  message: String
+  product: Product
+}
+
+type ProductAttributeValue {
+  id: ID!
+  productId: ID!
+  attributeId: ID!
+  locale: String
+  channel: String
+  textValue: String
+  booleanValue: Boolean
+  integerValue: Int
+  floatValue: Float
+  dateTimeValue: String
+  dateValue: String
+  jsonValue: String
+  attribute: Attribute!
+  product: Product!
+}
+
+type ProductAdditionalData {
+  id: ID
+  code: String
+  label: String
+  value: String
+  admin_name: String
+  type: String
+}
+
+type ProductPriceHtml {
+  id: ID!
+  type: String
+  minPrice: String
+  priceHtml: String
+  priceWithoutHtml: String
+  regularPrice: String
+  formattedRegularPrice: String
+  finalPrice: String
+  formattedFinalPrice: String
+  currencyCode: String
+  bundlePrice: BundlePrice
+}
+
+type BundlePrice {
+  finalPriceFrom: String
+  formattedFinalPriceFrom: String
+  regularPriceFrom: String
+  formattedRegularPriceFrom: String
+  finalPriceTo: String
+  formattedFinalPriceTo: String
+  regularPriceTo: String
+  formattedRegularPriceTo: String
+}
+
+type ConfigurableProductData {
+  index: JSON
+  attributes: [Attribute]
+  variant: Product
+}
+
+type ProductCustomizableOption {
+  id: Int!
+  label: String
+  productId: ID!
+  type: String
+  isRequired: Boolean
+  maxCharacters: String
+  supportedFileExtensions: String
+  sortOrder: Int
+  product: Product
+  translations: ProductCustomizableOptionTranslation
+  customizableOptionPrices: [ProductCustomizableOptionPrice]
+}
+
+type ProductCustomizableOptionTranslation {
+  id: Int!
+  locale: String
+  label: String
+  productCustomizableOptionId: ID!
+}
+
+type ProductCustomizableOptionPrice {
+  id: Int!
+  isDefault: Boolean
+  isUserDefined: Boolean
+  label: String
+  price: Float
+  productCustomizableOptionId: ID!
+  qty: Int
+  sortOrder: Int
+}
+
+type CustomerGroupPrice {
+  id: ID
+  customerGroupId: ID
+  qty: Int
+  valueType: String
+  value: Float
+}
+
+type ProductDownloadableSample {
+  id: ID
+  url: String
+  file: String
+  fileName: String
+  type: String
+  title: String
+  sortOrder: Int
+  productId: ID
+}
+
+type ProductDownloadableLink {
+  id: ID
+  title: String
+  price: Float
+  url: String
+  file: String
+  fileName: String
+  type: String
+  sampleUrl: String
+  sampleFile: String
+  sampleFileName: String
+  sampleType: String
+  sortOrder: Int
+  productId: ID
+}
+
+type ProductGroupedProduct {
+  id: ID
+  qty: Int
+  sortOrder: Int
+  productId: ID
+  associatedProductId: ID
+  product: Product
+  associatedProduct: Product
+}
+
+type ProductBundleOption {
+  id: ID
+  type: String
+  isRequired: Boolean
+  sortOrder: Int
+  productId: ID
+  label: String
+  bundleOptionProducts: [ProductBundleOptionProduct]
+}
+
+type ProductBundleOptionProduct {
+  id: ID
+  qty: Int
+  isUserDefined: Boolean
+  sortOrder: Int
+  isDefault: Boolean
+  price: Float
+  priceType: String
+  productBundleOptionId: ID
+  productId: ID
+  product: Product
+}
+
+type BookingProduct {
+  id: ID
+  type: String
+  qty: Int
+  location: String
+  showLocation: Boolean
+  availableEveryWeek: Boolean
+  availableFrom: String
+  availableTo: String
+  productId: ID
+  product: Product
+}
+
+type BookingDaySlots {
+  id: ID
+  day: Int
+  from: String
+  to: String
+  bookingProductId: ID
+}
+
+type Image {
+  id: ID
+  type: String
+  path: String
+  url: String
+  productId: ID
+}
+
+type CacheImage {
+  smallImageUrl: String
+  mediumImageUrl: String
+  largeImageUrl: String
+  originalImageUrl: String
+}
+
+type Video {
+  id: ID
+  type: String
+  path: String
+  url: String
+  productId: ID
+}
+
+type OrderInventory {
+  id: ID
+  qty: Int
+  productId: ID
+  orderId: ID
+}
+
+type Inventory {
+  id: ID!
+  qty: Int!
+  productId: ID!
+  inventorySourceId: ID!
+  vendorId: Int!
+  inventorySource: InventorySource!
+  product: Product!
+}
+
+input FilterProductsInput {
+  page: Int!
+  limit: Int!
+  productId: Int
+  type: String
+  sku: String
+  name: String
+  attributeFamily: Int
+  channel: String
+}
+
+input CreateProductInput {
+  type: String!
+  attributeFamilyId: ID!
+  sku: String!
+  superAttributes: [SuperAttributesInput]
+}
+
+input SuperAttributesInput {
+  attributeCode: String!
+  values: [Int!]
+}
+
+input UpdateProductInput {
+  channel: String!
+  locale: String!
+  sku: String!
+  name: String!
+  productNumber: String
+  urlKey: String!
+  taxCategoryId: ID
+  new: Boolean
+  featured: Boolean
+  visibleIndividually: Boolean
+  status: Boolean
+  guestCheckout: Boolean
+  color: Int
+  size: Int
+  customAttributes: [CustomAttributeInput]
+  shortDescription: String!
+  description: String!
+  metaTitle: String
+  metaKeywords: String
+  metaDescription: String
+  price: Float!
+  cost: Float
+  specialPrice: Float
+  specialPriceFrom: String
+  specialPriceTo: String
+  length: Float
+  width: Float
+  height: Float
+  depth: Float
+  weight: Float!
+  customerGroupPrices: [CustomerGroupPriceInput]
+  inventories: [InventoriesInput!]
+  manageStock: Boolean
+  categories: [Int!]
+  channels: [Int!]
+  relatedProducts: [Int]
+  upSells: [Int]
+  crossSells: [Int]
+  images: [String]
+  videos: [String]
+  uploadType: UploadType
+  defaultVariantId: ID
+  variants: [UpdateVariantInput!]
+  links: [UpdateGroupedProductInput!]
+  downloadableLinks: [UpdateDownloadableLinksInput!]
+  downloadableSamples: [UpdateDownloadableSamplesInput!]
+  bundleOptions: [UpdateBundleOptionsInput!]
+  booking: UpdateBookingInput
+  customizableOptions: [UpdateCustomizableOptionInput!]
+}
+
+input CustomAttributeInput {
+  name: String!
+  value: String
+}
+
+input CustomerGroupPriceInput {
+  customerGroupId: ID
+  qty: Int
+  valueType: String
+  value: Float
+}
+
+input InventoriesInput {
+  inventorySourceId: ID!
+  qty: Int!
+}
+
+input UpdateVariantInput {
+  variantId: ID!
+  sku: String!
+  name: String!
+  color: Int
+  size: Int
+  inventories: [VariantInventoryInput!]
+  price: Float!
+  weight: Float!
+  status: Boolean!
+  images: [String]
+}
+
+input VariantInventoryInput {
+  inventorySourceId: ID!
+  qty: Int!
+}
+
+input UpdateGroupedProductInput {
+  productId: ID!
+  qty: Int!
+  sortOrder: Int
+}
+
+input UpdateDownloadableLinksInput {
+  id: ID
+  title: String
+  price: Float
+  url: String
+  file: Upload
+  type: String
+  sampleUrl: String
+  sampleFile: Upload
+  sampleType: String
+  sortOrder: Int
+}
+
+input UpdateDownloadableSamplesInput {
+  id: ID
+  title: String
+  url: String
+  file: Upload
+  type: String
+  sortOrder: Int
+}
+
+input UpdateBundleOptionsInput {
+  id: ID
+  label: String
+  type: String
+  isRequired: Boolean
+  sortOrder: Int
+  bundleOptionProducts: [UpdateBundleOptionProductInput]
+}
+
+input UpdateBundleOptionProductInput {
+  id: ID
+  productId: ID
+  qty: Int
+  isUserDefined: Boolean
+  sortOrder: Int
+  isDefault: Boolean
+}
+
+input UpdateBookingInput {
+  type: String
+  qty: Int
+  location: String
+  showLocation: Boolean
+  availableEveryWeek: Boolean
+  availableFrom: String
+  availableTo: String
+}
+
+input UpdateCustomizableOptionInput {
+  label: String!
+  type: UpdateCustomizableOptionInputTypeEnum!
+  isRequired: Boolean!
+  sortOrder: Int!
+  maxCharacters: Int!
+  supportedFileExtensions: String!
+  prices: [UpdateCustomizableOptionPriceInput]!
+}
+
+input UpdateCustomizableOptionPriceInput {
+  label: String
+  price: Float!
+  sortOrder: Int
+}
+
+# ---------------------------------------------------------------------------
+# Category
+# ---------------------------------------------------------------------------
+
+type Category {
+  id: ID!
+  position: Int
+  logoPath: String
+  logoUrl: String
+  status: Boolean
+  displayMode: String!
+  lft: Int
+  rgt: Int
+  parentId: ID
+  additional: String
+  bannerPath: String
+  bannerUrl: String
+  name: String!
+  slug: String!
+  urlPath: String
+  description: String!
+  metaTitle: String
+  metaDescription: String
+  metaKeywords: String
+  localeId: Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  filterableAttributes: [FilterableAttribute!]
+  children: [Category!]
+}
+
+type CategoryResponse {
+  success: Boolean!
+  message: String!
+  category: Category
+}
+
+type FilterableAttribute {
+  id: ID!
+  code: String!
+  adminName: String!
+  type: String!
+  validation: String
+  position: Int
+  isFilterable: Int
+  category: Category!
+  options: [AttributeOption!]
+}
+
+input CreateCategoryInput {
+  locale: String
+  name: String
+  slug: String
+  description: String
+  status: Boolean
+  position: Int
+  displayMode: String
+  logoPath: [String]
+  bannerPath: [String]
+  parentId: Int
+  metaTitle: String
+  metaDescription: String
+  metaKeywords: String
+  attributes: [String]
+}
+
+input FilterCategoryListInput {
+  id: Int
+  slug: String
+  name: String
+  status: Boolean
+  position: Int
+}
+
+# ---------------------------------------------------------------------------
+# Attribute & AttributeFamily
+# ---------------------------------------------------------------------------
+
+type Attribute {
+  id: ID!
+  code: String!
+  adminName: String!
+  type: String!
+  position: Int
+  defaultValue: String
+  isRequired: Boolean!
+  isUnique: Boolean!
+  validation: String
+  valuePerLocale: Boolean
+  valuePerChannel: Boolean
+  isFilterable: Boolean
+  isConfigurable: Boolean!
+  isVisibleOnFront: Boolean
+  isUserDefined: Boolean
+  swatchType: String
+  isComparable: Boolean!
+  options: [AttributeOption!]
+  translations: [AttributeTranslation!]
+}
+
+type AttributeResponse {
+  success: Boolean
+  message: String
+  attribute: Attribute
+}
+
+type AttributeOption {
+  id: ID!
+  adminName: String!
+  swatchValue: String
+  sortOrder: Int!
+  attributeId: ID!
+  attribute: Attribute!
+  isNew: Boolean
+  isDelete: Boolean
+  position: String
+  translations: [AttributeOptionTranslation!]
+}
+
+type AttributeOptionTranslation {
+  id: ID!
+  locale: String!
+  label: String!
+  attributeOptionId: ID!
+}
+
+type AttributeTranslation {
+  id: ID!
+  locale: String!
+  name: String!
+  attributeId: ID!
+  attribute: Attribute!
+}
+
+type AttributeFamily {
+  id: ID!
+  code: String!
+  name: String!
+  status: Boolean
+  isUserDefined: Boolean
+  attributeGroups: [AttributeGroup!]
+}
+
+type AttributeFamilyResponse {
+  success: Boolean
+  message: String
+  attributeFamily: AttributeFamily
+}
+
+type AttributeGroup {
+  id: ID!
+  name: String!
+  position: Int!
+  isUserDefined: Boolean
+  attributeFamilyId: ID!
+  customAttributes: [Attribute]
+}
+
+type AttributeGroupResponse {
+  success: Boolean
+  message: String
+  attributeGroup: AttributeGroup
+}
+
+input CreateAttributeInput {
+  code: String!
+  type: AttributeType!
+  adminName: String!
+  isRequired: Boolean!
+  isUnique: Boolean!
+  validation: String
+  defaultValue: String
+  valuePerLocale: Boolean
+  valuePerChannel: Boolean
+  isFilterable: Boolean
+  isConfigurable: Boolean!
+  isVisibleOnFront: Boolean
+  isComparable: Boolean!
+  translations: [AttributeTranslationInput]
+  swatchType: String
+  options: [OptionInput]
+}
+
+input AttributeTranslationInput {
+  code: String!
+  name: String!
+}
+
+input OptionInput {
+  swatchValue: String
+  adminName: String!
+  isNew: String
+  isDelete: String
+  translations: [OptionTranslationInput]
+  position: String
+}
+
+input OptionTranslationInput {
+  code: String!
+  label: String!
+}
+
+input FilterAttributesInput {
+  id: ID
+  code: String
+  adminName: String
+  type: String
+  isRequired: Int
+  isUnique: Int
+  valuePerLocale: Int
+  valuePerChannel: Int
+}
+
+input CreateAttributeGroupInput {
+  id: ID
+  code: String!
+  name: String!
+  column: AttributeGroupColumn!
+  position: Int!
+  attributeFamilyId: ID
+  customAttributes: [CustomerAttributeInput]
+}
+
+input CustomerAttributeInput {
+  id: Int!
+  position: Int!
+}
+
+input CreateAttributeFamilyInput {
+  code: String!
+  name: String!
+  attributeGroups: [CreateAttributeGroupInput!]
+}
+
+input FilterAttributeFamiliesInput {
+  id: ID
+  code: String
+  name: String
+}
+
+# ---------------------------------------------------------------------------
+# Cart
+# ---------------------------------------------------------------------------
+
+type Cart {
+  id: ID!
+  customerEmail: String
+  customerFirstName: String
+  customerLastName: String
+  shippingMethod: String
+  couponCode: String
+  isGift: Boolean!
+  itemsCount: Int
+  itemsQty: Int
+  exchangeRate: Float
+  globalCurrencyCode: String
+  baseCurrencyCode: String
+  channelCurrencyCode: String
+  cartCurrencyCode: String
+  grandTotal: Float
+  baseGrandTotal: Float
+  subTotal: Float
+  baseSubTotal: Float
+  taxTotal: Float
+  baseTaxTotal: Float
+  discountAmount: Float
+  baseDiscountAmount: Float
+  shippingAmount: Float
+  baseShippingAmount: Float
+  shippingAmountInclTax: Float
+  baseShippingAmountInclTax: Float
+  subTotalInclTax: Float
+  baseSubTotalInclTax: Float
+  checkoutMethod: String
+  isGuest: Boolean
+  isActive: Boolean
+  appliedCartRuleIds: String
+  customerId: ID
+  channelId: ID!
+  createdAt: DateTime
+  updatedAt: DateTime
+  appliedTaxRates: [AppliedTaxRate]
+  formattedPrice: FormattedPrice
+  items: [CartItem!]
+  allItems: [CartItem!]
+  billingAddress: Address
+  shippingAddress: Address
+  selectedShippingRate: CartShippingRate
+  payment: CartPayment
+  status: Boolean
+  message: String
+}
+
+type CartItem {
+  id: ID!
+  quantity: Int!
+  sku: String
+  type: String
+  name: String
+  couponCode: String
+  weight: Float!
+  totalWeight: Float!
+  baseTotalWeight: Float!
+  price: Float!
+  basePrice: Float!
+  customPrice: Float
+  total: Float!
+  baseTotal: Float!
+  taxPercent: Float
+  taxAmount: Float
+  baseTaxAmount: Float
+  discountPercent: Float!
+  discountAmount: Float!
+  baseDiscountAmount: Float!
+  priceInclTax: Float
+  basePriceInclTax: Float
+  totalInclTax: Float
+  baseTotalInclTax: Float
+  appliedTaxRate: String
+  parentId: ID
+  productId: ID!
+  cartId: ID!
+  taxCategoryId: ID
+  appliedCartRuleIds: String
+  additional: JSON
+  createdAt: DateTime
+  updatedAt: DateTime
+  formattedPrice: FormattedPrice
+  product: Product!
+  cart: Cart
+  child: CartItem
+  parent: CartItem
+}
+
+type CartItemResponse {
+  success: Boolean
+  message: String
+  cart: Cart
+}
+
+type CartPayment {
+  id: ID
+  method: String
+  methodTitle: String
+  cartId: ID
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type CartShippingRate {
+  id: ID!
+  carrier: String!
+  carrierTitle: String!
+  method: String!
+  methodTitle: String!
+  methodDescription: String
+  price: Float
+  basePrice: Float
+  discountAmount: Float
+  baseDiscountAmount: Float
+  taxPercent: Float
+  taxAmount: Float
+  baseTaxAmount: Float
+  priceInclTax: Float
+  basePriceInclTax: Float
+  appliedTaxRate: String
+  isCalculateTax: Boolean
+  cartAddressId: ID
+  createdAt: DateTime
+  updatedAt: DateTime
+  shippingAddress: Address
+  formattedPrice: FormattedPrice
+}
+
+type AppliedTaxRate {
+  taxName: String
+  totalAmount: String
+}
+
+type AvailableBookingSlot {
+  from: String
+  to: String
+  timestamp: String
+  qty: Boolean
+  time: String
+  slots: [AvailableBookingSlot]
+  fromTimestamp: String
+  toTimestamp: String
+}
+
+input AddItemToCartInput {
+  isBuyNow: Boolean
+  productId: ID!
+  quantity: Int!
+  customizableOptions: [CustomizableOptionInput!]
+  selectedConfigurableOption: Int
+  superAttribute: [ConfigurableProductInput!]
+  qty: [GroupedProductInput!]
+  links: [Int!]
+  bundleOptions: [BundledOptionsInput!]
+  booking: BookingProductInput
+}
+
+input CustomizableOptionInput {
+  id: ID!
+  value: [String]
+  file: [Upload]
+}
+
+input ConfigurableProductInput {
+  attributeId: Int!
+  attributeOptionId: Int!
+}
+
+input GroupedProductInput {
+  productId: Int!
+  quantity: Int!
+}
+
+input BundledOptionsInput {
+  bundleOptionId: Int!
+  bundleOptionProductId: [Int!]
+  qty: Int
+}
+
+input BookingProductInput {
+  date: String
+  slot: BookingSlotInput
+  dateFrom: String
+  dateTo: String
+  qty: [EventBookingInput!]
+  note: String
+  rentingType: RentingTypeEnumForCart
+}
+
+input BookingSlotInput {
+  from: Int
+  to: Int
+}
+
+input EventBookingInput {
+  ticketId: Int!
+  quantity: Int!
+}
+
+input UpdateItemToCartInput {
+  qty: [UpdateItemsQty!]
+}
+
+input UpdateItemsQty {
+  cartItemId: ID!
+  quantity: Int!
+}
+
+input ApplyCouponInput {
+  code: String!
+}
+
+type CouponResponse {
+  success: Boolean!
+  message: String!
+  cart: Cart
+}
+
+# ---------------------------------------------------------------------------
+# Wishlist
+# ---------------------------------------------------------------------------
+
+type Wishlist {
+  id: ID!
+  channelId: ID!
+  productId: ID!
+  customerId: ID
+  additional: JSON
+  movedToCart: Boolean
+  shared: Boolean
+  createdAt: DateTime
+  updatedAt: DateTime
+  product: Product!
+  channel: Channel!
+  customer: Customer
+}
+
+type WishlistResponse {
+  success: Boolean
+  message: String
+  wishlist: [Wishlist]
+}
+
+input FilterWishlistInput {
+  id: Int
+  productId: Int
+  productName: String
+  channelId: Int
+}
+
+# ---------------------------------------------------------------------------
+# Order
+# ---------------------------------------------------------------------------
+
+type Order {
+  id: Int!
+  incrementId: String
+  status: String
+  statusLabel: String
+  channelName: String
+  isGuest: Int
+  customerEmail: String
+  customerFirstName: String
+  customerLastName: String
+  shippingMethod: String
+  shippingTitle: String
+  shippingDescription: String
+  couponCode: String
+  isGift: Int
+  totalItemCount: Int
+  totalQtyOrdered: Int
+  baseCurrencyCode: String
+  channelCurrencyCode: String
+  orderCurrencyCode: String
+  grandTotal: Float
+  baseGrandTotal: Float
+  grandTotalInvoiced: Float
+  baseGrandTotalInvoiced: Float
+  grandTotalRefunded: Float
+  baseGrandTotalRefunded: Float
+  subTotal: Float
+  baseSubTotal: Float
+  subTotalInvoiced: Float
+  baseSubTotalInvoiced: Float
+  subTotalRefunded: Float
+  baseSubTotalRefunded: Float
+  discountPercent: Float
+  discountAmount: Float
+  baseDiscountAmount: Float
+  discountInvoiced: Float
+  baseDiscountInvoiced: Float
+  discountRefunded: Float
+  baseDiscountRefunded: Float
+  taxAmount: Float
+  baseTaxAmount: Float
+  taxAmountInvoiced: Float
+  baseTaxAmountInvoiced: Float
+  taxAmountRefunded: Float
+  baseTaxAmountRefunded: Float
+  shippingAmount: Float
+  baseShippingAmount: Float
+  shippingInvoiced: Float
+  baseShippingInvoiced: Float
+  shippingRefunded: Float
+  baseShippingRefunded: Float
+  shippingDiscountAmount: Float
+  baseShippingDiscountAmount: Float
+  shippingTaxAmount: Float
+  baseShippingTaxAmount: Float
+  shippingTaxRefunded: Float
+  baseShippingTaxRefunded: Float
+  subTotalInclTax: Float
+  baseSubTotalInclTax: Float
+  shippingAmountInclTax: Float
+  baseShippingAmountInclTax: Float
+  customerId: Int
+  customerType: String
+  channelId: Int
+  channelType: String
+  cartId: ID
+  appliedCartRuleIds: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  formattedPrice: FormattedPrice
+  items: [OrderItem!]
+  comments: [OrderComment]
+  downloadableLinkPurchased: [DownloadableLinkPurchased]
+  shipments: [Shipment]
+  invoices: [Invoice]
+  refunds: [Refund!]
+  customer: Customer
+  addresses: [Address!]
+  payment: OrderPayment
+  billingAddress: Address!
+  shippingAddress: Address
+  channel: Channel
+}
+
+type OrderItem {
+  id: ID!
+  sku: String
+  type: String
+  name: String
+  couponCode: String
+  weight: Float
+  totalWeight: Float
+  baseTotalWeight: Float
+  price: Float!
+  basePrice: Float!
+  total: Float!
+  baseTotal: Float!
+  totalInvoiced: Float
+  baseTotalInvoiced: Float
+  amountRefunded: Float
+  baseAmountRefunded: Float
+  qtyOrdered: Int
+  qtyShipped: Int
+  qtyInvoiced: Int
+  qtyCanceled: Int
+  qtyRefunded: Int
+  discountPercent: Float
+  discountAmount: Float
+  baseDiscountAmount: Float
+  discountInvoiced: Float
+  baseDiscountInvoiced: Float
+  discountRefunded: Float
+  baseDiscountRefunded: Float
+  taxPercent: Float
+  taxAmount: Float
+  baseTaxAmount: Float
+  taxAmountInvoiced: Float
+  baseTaxAmountInvoiced: Float
+  taxAmountRefunded: Float
+  baseTaxAmountRefunded: Float
+  priceInclTax: Float
+  basePriceInclTax: Float
+  totalInclTax: Float
+  baseTotalInclTax: Float
+  productId: ID
+  productType: String
+  orderId: ID!
+  parentId: ID
+  additional: JSON
+  createdAt: DateTime
+  updatedAt: DateTime
+  formattedPrice: FormattedPrice
+  product: Product
+  order: Order!
+  children: [OrderItem]
+  downloadableLinkPurchased: DownloadableLinkPurchased
+}
+
+type OrderComment {
+  id: ID!
+  orderId: ID!
+  comment: String
+  customerNotified: Boolean!
+  createdAt: DateTime
+  updatedAt: DateTime
+  order: Order!
+}
+
+type OrderPayment {
+  id: ID!
+  orderId: ID
+  method: String!
+  methodTitle: String
+  additional: JSON
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type OrderResponse {
+  success: Boolean
+  jumpToSection: String
+  cart: Cart
+  customerAddresses: Address
+}
+
+type CancelOrderResponse {
+  success: Boolean
+  message: String
+  order: Order
+}
+
+type DownloadableLinkPurchased {
+  id: ID
+  productName: String
+  linkTitle: String
+  status: String
+  downloadedInvoiced: Int
+  remainingDownloads: Int
+  orderId: ID
+  orderItemId: ID
+  customerId: ID
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input FilterOrderInput {
+  id: Int
+  baseSubTotal: Float
+  baseGrandTotal: Float
+  orderDate: String
+  channelName: String
+  status: String
+  billedTo: String
+  shippedTo: String
+}
+
+input FilterOrderInvoiceInput {
+  orderId: Int!
+  id: Int
+  invoiceDate: String
+  customerName: String
+  status: String
+  amount: Float
+}
+
+input FilterOrderShipmentInput {
+  orderId: Int!
+  id: Int
+  shipmentDate: String
+  carrierTitle: String
+  trackingNumber: String
+  totalQty: Int
+}
+
+input FilterOrderRefundInput {
+  orderId: Int!
+  id: Int
+  refundDate: String
+  customerName: String
+  status: String
+  refunded: Float
+}
+
+input FilterCustomerOrderInput {
+  id: Int
+  incrementId: Int
+  customerId: ID
+  subTotal: Float
+  grandTotal: Float
+  baseSubTotal: Float
+  baseGrandTotal: Float
+  orderDate: String
+  orderDateFrom: String
+  orderDateTo: String
+  channelName: String
+  status: String
+}
+
+input OrderShipmentInput {
+  id: Int
+  orderId: Int
+  shipmentDate: String
+  carrierTitle: String
+  trackNumber: String
+}
+
+input OrderInvoiceInput {
+  id: Int
+  orderId: Int
+  totalQty: Int
+  grandTotal: Float
+  baseGrandTotal: Float
+  invoiceDate: String
+}
+
+input OrderRefundInput {
+  id: Int
+  orderId: Int
+  totalQty: Int
+  adjustmentRefund: Float
+  adjustmentFee: Float
+  shippingAmount: Float
+  taxAmount: Float
+  discountAmount: Float
+  grandTotal: Float
+  baseGrandTotal: Float
+  refundDate: String
+}
+
+# ---------------------------------------------------------------------------
+# Invoice
+# ---------------------------------------------------------------------------
+
+type Invoice {
+  id: Int!
+  incrementId: String
+  state: String
+  emailSent: Int
+  totalQty: Int
+  baseCurrencyCode: String
+  channelCurrencyCode: String
+  orderCurrencyCode: String
+  subTotal: Float
+  baseSubTotal: Float
+  grandTotal: Float
+  baseGrandTotal: Float
+  shippingAmount: Float
+  baseShippingAmount: Float
+  taxAmount: Float
+  baseTaxAmount: Float
+  discountAmount: Float
+  baseDiscountAmount: Float
+  shippingTaxAmount: Float
+  baseShippingTaxAmount: Float
+  subTotalInclTax: Float
+  baseSubTotalInclTax: Float
+  shippingAmountInclTax: Float
+  baseShippingAmountInclTax: Float
+  formattedPrice: FormattedPrice
+  orderId: Int
+  transactionId: String
+  createdAt: String
+  updatedAt: String
+  order: Order!
+  items: [InvoiceItem!]
+  customer: Customer
+  channel: Channel
+  address: Address
+}
+
+type InvoiceResponse {
+  success: Boolean!
+  message: String
+  invoice: Invoice
+}
+
+type InvoiceItem {
+  id: ID!
+  parentId: Int
+  name: String
+  description: String
+  sku: String
+  qty: Int
+  price: Float!
+  basePrice: Float!
+  total: Float!
+  baseTotal: Float!
+  taxAmount: Float
+  baseTaxAmount: Float
+  discountPercent: Float
+  discountAmount: Float
+  baseDiscountAmount: Float
+  priceInclTax: Float
+  basePriceInclTax: Float
+  totalInclTax: Float
+  baseTotalInclTax: Float
+  productId: ID!
+  productType: String
+  orderItemId: ID!
+  invoiceId: ID!
+  additional: JSON
+  createdAt: DateTime
+  updatedAt: DateTime
+  formattedPrice: FormattedPrice
+  invoice: Invoice
+  orderItem: OrderItem
+  product: Product!
+  children: [InvoiceItem]
+}
+
+input FilterInvoiceInput {
+  id: Int
+  orderId: Int
+  grandTotal: Float
+  invoiceDate: String
+}
+
+input FilterInvoiceItemInput {
+  invoiceId: Int!
+  id: Int
+  name: String
+  sku: String
+  qty: Int
+  price: Float
+  orderItemId: Int
+}
+
+input CreateInvoiceInput {
+  orderId: Int!
+  canCreateTransaction: Boolean!
+  invoiceData: [InvoiceDataInput!]!
+}
+
+input InvoiceDataInput {
+  orderItemId: Int!
+  quantity: Int!
+}
+
+# ---------------------------------------------------------------------------
+# Shipment
+# ---------------------------------------------------------------------------
+
+type Shipment {
+  id: Int
+  status: String
+  totalQty: Int
+  totalWeight: Float
+  carrierCode: String
+  carrierTitle: String
+  trackNumber: String
+  emailSent: Int
+  customerId: Int
+  customerType: String
+  orderId: Int
+  orderAddressId: Int
+  inventorySourceId: Int
+  inventorySourceName: String
+  createdAt: String
+  updatedAt: String
+  order: Order!
+  items: [ShipmentItem!]
+  inventorySource: InventorySource
+  customer: Customer
+  address: Address
+}
+
+type ShipmentResponse {
+  success: Boolean
+  message: String
+  shipment: Shipment
+}
+
+type ShipmentItem {
+  id: Int!
+  name: String
+  description: String
+  sku: String
+  qty: Int
+  weight: Float
+  price: Float
+  basePrice: Float
+  total: Float
+  baseTotal: Float
+  priceInclTax: Float
+  basePriceInclTax: Float
+  formattedPrice: FormattedPrice
+  productId: ID!
+  productType: String
+  orderItemId: ID!
+  shipmentId: ID!
+  additional: JSON
+  createdAt: DateTime
+  updatedAt: DateTime
+  shipment: Shipment!
+  orderItem: OrderItem!
+  product: Product!
+}
+
+input FilterShipmentInput {
+  id: Int
+  totalQty: Int
+  orderId: Int
+  orderDate: String
+  shipmentDate: String
+  inventorySource: String
+  shippingTo: String
+}
+
+input FilterShipmentItemInput {
+  shipmentId: ID!
+  id: Int
+  name: String
+  sku: String
+  qty: Int
+  weight: Float
+  price: Float
+  orderItemId: Int
+}
+
+input CreateShipmentInput {
+  orderId: Int!
+  carrierTitle: String!
+  trackNumber: String!
+  inventorySourceId: Int!
+  shipmentData: [ShipmentDataInput!]!
+}
+
+input ShipmentDataInput {
+  orderItemId: Int!
+  quantity: Int!
+}
+
+# ---------------------------------------------------------------------------
+# Refund
+# ---------------------------------------------------------------------------
+
+type Refund {
+  id: ID
+  state: String
+  totalQty: Int
+  baseCurrencyCode: String
+  channelCurrencyCode: String
+  orderCurrencyCode: String
+  subTotal: Float
+  baseSubTotal: Float
+  grandTotal: Float
+  baseGrandTotal: Float
+  adjustmentRefund: Float
+  adjustmentFee: Float
+  shippingAmount: Float
+  baseShippingAmount: Float
+  taxAmount: Float
+  baseTaxAmount: Float
+  discountAmount: Float
+  baseDiscountAmount: Float
+  orderId: ID
+  formattedPrice: FormattedPrice
+  createdAt: DateTime
+  updatedAt: DateTime
+  order: Order
+  items: [RefundItem]
+  customer: Customer
+}
+
+type RefundItem {
+  id: ID
+  name: String
+  sku: String
+  qty: Int
+  price: Float
+  basePrice: Float
+  total: Float
+  baseTotal: Float
+  taxAmount: Float
+  baseTaxAmount: Float
+  discountPercent: Float
+  discountAmount: Float
+  baseDiscountAmount: Float
+  productId: ID
+  productType: String
+  orderItemId: ID
+  refundId: ID
+  additional: JSON
+  createdAt: DateTime
+  updatedAt: DateTime
+  refund: Refund
+  orderItem: OrderItem
+  product: Product
+}
+
+# ---------------------------------------------------------------------------
+# Review
+# ---------------------------------------------------------------------------
+
+type Review {
+  id: ID!
+  name: String
+  title: String
+  rating: Int!
+  comment: String
+  status: String
+  productId: ID!
+  customerId: ID
+  createdAt: DateTime
+  updatedAt: DateTime
+  customer: Customer
+  product: Product
+  images: [ReviewAttachment]
+}
+
+type ReviewResponse {
+  success: Boolean
+  message: String
+  review: Review
+}
+
+type ReviewAttachment {
+  id: ID
+  reviewId: ID
+  type: String
+  mimeType: String
+  path: String
+  url: String
+  review: Review
+}
+
+input FilterReviewInput {
+  id: ID
+}
+
+# ---------------------------------------------------------------------------
+# CMS
+# ---------------------------------------------------------------------------
+
+type CmsPage {
+  id: ID!
+  layout: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  channels: [Channel!]
+  translations: [CmsTranslation!]
+}
+
+type CmsPageResponse {
+  success: Boolean!
+  message: String!
+  page: CmsPage
+}
+
+type CmsTranslation {
+  id: ID!
+  urlKey: String!
+  metaDescription: String
+  metaTitle: String
+  pageTitle: String
+  metaKeywords: String
+  htmlContent: String
+  locale: String!
+  cmsPageId: ID!
+}
+
+input FilterCmsPageInput {
+  id: Int
+  pageTitle: String
+  urlKey: String
+}
+
+input CreateCmsPageInput {
+  layout: String
+  pageTitle: String!
+  channels: [Int!]
+  htmlContent: String
+  metaTitle: String
+  urlKey: String!
+  metaKeywords: String
+  metaDescription: String
+}
+
+# ---------------------------------------------------------------------------
+# Channel
+# ---------------------------------------------------------------------------
+
+type Channel {
+  id: ID!
+  code: String!
+  timezone: String
+  theme: String
+  hostname: String
+  logoUrl: String
+  faviconUrl: String
+  homeSeo: HomeSeo
+  isMaintenanceOn: Boolean
+  allowedIps: String
+  rootCategoryId: Int!
+  defaultLocaleId: Int!
+  baseCurrencyId: Int!
+  createdAt: DateTime
+  updatedAt: DateTime
+  locales: [Locale!]
+  defaultLocale: Locale
+  currencies: [Currency!]
+  baseCurrency: Currency!
+  inventorySources: [InventorySource!]
+  rootCategory: Category!
+  maintenanceModeText: String
+  name: String!
+  description: String
+}
+
+type ChannelResponse {
+  success: Boolean!
+  message: String!
+  channel: Channel
+}
+
+type HomeSeo {
+  metaTitle: String
+  metaKeywords: String
+  metaDescription: String
+}
+
+type Locale {
+  id: ID
+  name: String
+  code: String
+  direction: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type Currency {
+  id: ID
+  name: String
+  code: String
+  symbol: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input FilterChannelInput {
+  id: Int
+  code: String
+  name: String
+  hostname: String
+}
+
+input CreateChannelInput {
+  code: String!
+  name: String!
+  description: String
+  theme: String
+  hostname: String
+  defaultLocaleId: Int!
+  baseCurrencyId: Int!
+  rootCategoryId: Int!
+  locales: [String!]!
+  currencies: [String!]!
+  inventorySources: [String!]
+  logo: String
+  favicon: String
+  seoTitle: String!
+  seoDescription: String!
+  seoKeywords: String!
+  maintenanceModeText: String
+  allowedIps: String
+  isMaintenanceOn: Boolean
+}
+
+# ---------------------------------------------------------------------------
+# InventorySource
+# ---------------------------------------------------------------------------
+
+type InventorySource {
+  id: ID!
+  code: String!
+  name: String!
+  description: String
+  contactName: String!
+  contactEmail: String!
+  contactNumber: String!
+  contactFax: String
+  country: String!
+  state: String!
+  city: String!
+  street: String!
+  postcode: String!
+  priority: Int
+  latitude: String
+  longitude: String
+  status: Boolean!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type InventorySourceResponse {
+  success: Boolean!
+  message: String
+  inventorySource: InventorySource
+}
+
+input FilterInventorySourceInput {
+  id: Int
+  code: String
+  name: String
+  status: Boolean
+}
+
+input CreateInventorySourceInput {
+  code: String
+  name: String
+  description: String
+  contactName: String
+  contactEmail: String
+  contactNumber: String
+  contactFax: String
+  country: String
+  state: String
+  city: String
+  street: String
+  postcode: String
+  priority: Int
+  latitude: String
+  longitude: String
+  status: Boolean
+}
+
+# ---------------------------------------------------------------------------
+# Tax
+# ---------------------------------------------------------------------------
+
+type TaxRate {
+  id: ID!
+  identifier: String!
+  isZip: Int
+  zipCode: String
+  zipFrom: String
+  zipTo: String
+  state: String!
+  country: String!
+  taxRate: Float!
+  taxCategories: [TaxCategory]
+}
+
+type TaxRateResponse {
+  success: Boolean!
+  message: String
+  taxRate: TaxRate
+}
+
+type TaxCategory {
+  id: ID!
+  code: String!
+  name: String!
+  description: String!
+  taxRates: [TaxRate!]
+}
+
+type TaxCategoryResponse {
+  success: Boolean!
+  message: String
+  taxCategory: TaxCategory
+}
+
+input FilterTaxRateInput {
+  id: Int
+  identifier: String
+  isZip: Int
+  zipCode: String
+  zipFrom: String
+  zipTo: String
+  state: String
+  country: String
+  taxRate: Float
+}
+
+input CreateTaxRateInput {
+  identifier: String!
+  isZip: String
+  zipCode: String
+  zipFrom: String
+  zipTo: String
+  state: String!
+  country: String!
+  taxRate: Float!
+}
+
+input FilterTaxCategoryInput {
+  id: Int
+  code: String
+  name: String
+}
+
+input CreateTaxCategoryInput {
+  code: String
+  name: String
+  description: String
+  taxrates: [Int]
+}
+
+# ---------------------------------------------------------------------------
+# Storefront: Browse / Catalog
+# ---------------------------------------------------------------------------
+
+type FilterAttribute {
+  id: ID
+  minPrice: Float
+  maxPrice: Float
+  filterAttributes: [Attribute!]
+  sortOrders: [CatalogSortOrder!]
+}
+
+type CatalogSortOrder {
+  key: String
+  title: String
+  value: String
+  sort: String
+  order: String
+  position: String
+}
+
+type ShopTheme {
+  id: ID!
+  themeCode: String
+  type: String
+  name: String
+  sortOrder: Int
+  status: Boolean
+  channelId: ID
+  createdAt: DateTime
+  updatedAt: DateTime
+  translations: [ThemeTranslation!]
+}
+
+type ThemeTranslation {
+  id: ID
+  locale: String
+  themeId: ID
+}
+
+input FilterHomeCategoriesInput {
+  key: String
+  value: String
+}
