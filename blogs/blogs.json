@@ -95,5 +95,17 @@
       "author": "Mayank Kumar",
       "url": "https://bagisto.com/en/scaling-bagisto-marketplace-extension-to-10-million-products/"
     }
-  ]
+  ],
+  "repo": "bagisto",
+  "feeds": [
+    {
+      "source": "https://www.linkedin.com/company/bagisto/",
+      "feed_url": "https://www.linkedin.com/company/bagisto/",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-06-14T20:42:17Z"
 }
