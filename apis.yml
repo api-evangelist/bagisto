@@ -5,7 +5,7 @@ description: Bagisto is a free and open-source Laravel e-commerce platform that 
   carts, and multi-channel selling. Built on Laravel Sanctum, the API offers both
   a public Storefront API and a full-control Admin API, making it suitable for headless
   commerce, mobile apps, and third-party integrations.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/bagisto/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -26,7 +26,7 @@ apis:
     products, categories, customers, orders, inventory, cart, checkout, and administrative
     functions. Provides separate Shop and Admin API namespaces secured with Laravel
     Sanctum tokens.
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://api-docs.bagisto.com/api/rest-api/introduction.html
   baseURL: https://{your-domain}/api/
   tags:
@@ -47,7 +47,7 @@ apis:
 - name: Bagisto GraphQL API
   description: GraphQL API for Bagisto providing flexible query-based access to storefront
     and catalog data as an alternative to the REST API.
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://devdocs.bagisto.com/api/graphql-api
   baseURL: https://{your-domain}/graphql
   tags:
