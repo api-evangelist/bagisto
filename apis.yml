@@ -79,7 +79,7 @@ common:
   url: https://bagisto.com/en/cloud-hosting/
 - type: X
   url: https://x.com/BagistoShop
-- type: Forum
+- type: Forums
   url: https://forums.bagisto.com/
 - type: Plans
   url: plans/bagisto-plans-pricing.yml

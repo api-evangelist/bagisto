@@ -1,103 +1,13 @@
 {
-  "meta": {
-    "source": "https://bagisto.com/en/blog/",
-    "fetched": "2026-06-13",
-    "provider": "bagisto"
-  },
-  "posts": [
-    {
-      "title": "Bagisto Shop API: Headless Commerce Made Easy",
-      "date": "2026-06-11",
-      "author": "Yashvir Singh",
-      "url": "https://bagisto.com/en/bagisto-shop-api-headless-commerce-made-easy/"
-    },
-    {
-      "title": "Bagisto Admin API: Run Your Store",
-      "date": "2026-06-11",
-      "author": "Yashvir Singh",
-      "url": "https://bagisto.com/en/bagisto-admin-api/"
-    },
-    {
-      "title": "Bagisto API: Headless REST & GraphQL",
-      "date": "2026-06-11",
-      "author": "Yashvir Singh",
-      "url": "https://bagisto.com/en/bagisto-api-headless-rest-graphql/"
-    },
-    {
-      "title": "The Most Popular Open Source Project Built on Laravel",
-      "date": "2026-06-10",
-      "author": "Prachi Chauhan",
-      "url": "https://bagisto.com/en/the-most-popular-open-source-project-built-on-laravel/"
-    },
-    {
-      "title": "How to Resolve Intl Issue in Bagisto",
-      "date": "2026-06-09",
-      "author": "Sanjana Singh",
-      "url": "https://bagisto.com/en/how-to-resolve-intl-issue-in-bagisto/"
-    },
-    {
-      "title": "Send Emails Using Gmail in Bagisto",
-      "date": "2026-06-05",
-      "author": "Sanjeev Papnoi",
-      "url": "https://bagisto.com/en/send-emails-using-gmail-in-bagisto/"
-    },
-    {
-      "title": "How to Create Virtual Product in Bagisto",
-      "date": "2026-06-05",
-      "author": "Prachi Chauhan",
-      "url": "https://bagisto.com/en/how-to-create-a-virtual-product-in-bagisto/"
-    },
-    {
-      "title": "Bagisto v2.4.5 Released",
-      "date": "2026-06-03",
-      "author": "aviral.laravel",
-      "url": "https://bagisto.com/en/bagisto-v2-4-5-released/"
-    },
-    {
-      "title": "EU Withdrawal Feature in Bagisto: Consumer Rights Compliance",
-      "date": "2026-06-03",
-      "author": "aviral.laravel",
-      "url": "https://bagisto.com/en/eu-withdrawal-feature-in-bagisto-consumer-rights-compliance/"
-    },
-    {
-      "title": "How to Set Locale in Bagisto",
-      "date": "2026-06-03",
-      "author": "Sanjana Singh",
-      "url": "https://bagisto.com/en/how-to-set-locale-in-bagisto/"
-    },
-    {
-      "title": "How to Configure Laravel Pint and How It Works",
-      "date": "2026-06-02",
-      "author": "Suraj Kashyap",
-      "url": "https://bagisto.com/en/how-to-configure-laravel-pint-and-how-does-it-works/"
-    },
-    {
-      "title": "How to Manage Orders in Bagisto",
-      "date": "2026-06-02",
-      "author": "Sanjana Singh",
-      "url": "https://bagisto.com/en/how-to-manage-orders-in-bagisto/"
-    },
-    {
-      "title": "Top 7 Best Open Source eCommerce Platforms",
-      "date": "2026-05-29",
-      "author": "Manish Kumar",
-      "url": "https://bagisto.com/en/ecommerce-open-source-platforms-middle-east/"
-    },
-    {
-      "title": "How to Set Catalog Rules in Bagisto",
-      "date": "2026-05-06",
-      "author": "Sanjana Singh",
-      "url": "https://bagisto.com/en/how-to-set-catalog-rules-in-bagisto/"
-    },
-    {
-      "title": "Scaling Bagisto Marketplace Platform to 10 Million+ Products",
-      "date": "2025-10-01",
-      "author": "Mayank Kumar",
-      "url": "https://bagisto.com/en/scaling-bagisto-marketplace-extension-to-10-million-products/"
-    }
-  ],
   "repo": "bagisto",
   "feeds": [
+    {
+      "source": "https://bagisto.com/en/feed/",
+      "feed_url": "https://bagisto.com/en/feed/",
+      "title": "",
+      "saved": 2,
+      "method": "feed"
+    },
     {
       "source": "https://www.linkedin.com/company/bagisto/",
       "feed_url": "https://www.linkedin.com/company/bagisto/",
@@ -106,6 +16,6 @@
       "method": "none"
     }
   ],
-  "post_count": 0,
-  "fetched": "2026-06-14T20:42:17Z"
+  "fetched": "2026-06-27T12:03:07Z",
+  "post_count": 9
 }
