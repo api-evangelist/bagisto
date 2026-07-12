@@ -61,6 +61,8 @@ apis:
   - url: graphql/bagisto-graphql.md
     type: GraphQL
 common:
+- type: DomainSecurity
+  url: security/bagisto-domain-security.yml
 - type: Website
   url: https://bagisto.com/en/
 - type: Documentation
