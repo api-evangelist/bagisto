@@ -73,6 +73,19 @@ apis:
   - url: graphql/bagisto-graphql.md
     type: GraphQL
 common:
+- type: IssueTracker
+  url: https://github.com/bagisto/bagisto/issues
+- type: Releases
+  url: https://github.com/bagisto/bagisto/releases
+- type: SecurityPolicy
+  url: https://github.com/bagisto/bagisto/blob/2.4/SECURITY.md
+- type: CodeOfConduct
+  url: https://github.com/bagisto/bagisto/blob/2.4/CODE_OF_CONDUCT.md
+- type: ContributionGuide
+  url: https://github.com/bagisto/bagisto/blob/2.4/.github/CONTRIBUTING.md
+- type: License
+  name: MIT
+  url: https://github.com/bagisto/bagisto/blob/2.4/LICENSE
 - type: DomainSecurity
   url: security/bagisto-domain-security.yml
 - type: Website
