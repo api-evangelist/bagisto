@@ -25,6 +25,16 @@ specificationVersion: '0.23'
 tags:
 - E-Commerce
 - Laravel
+- Open-Source
+- Product
+- Order
+- Customers
+- Inventory
+- Multi-Channel
+- Headless Commerce
+tags_raw:
+- E-Commerce
+- Laravel
 - Open Source
 - Products
 - Orders
@@ -42,6 +52,14 @@ apis:
   humanURL: https://api-docs.bagisto.com/api/rest-api/introduction.html
   baseURL: https://{your-domain}/api/
   tags:
+  - E-Commerce
+  - Product
+  - Order
+  - Customers
+  - Inventory
+  - Cart
+  - REST
+  tags_raw:
   - E-Commerce
   - Products
   - Orders
@@ -63,6 +81,11 @@ apis:
   humanURL: https://devdocs.bagisto.com/api/graphql-api
   baseURL: https://{your-domain}/graphql
   tags:
+  - E-Commerce
+  - GraphQL
+  - Product
+  - Catalog
+  tags_raw:
   - E-Commerce
   - GraphQL
   - Products
