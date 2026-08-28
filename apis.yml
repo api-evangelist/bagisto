@@ -5,6 +5,19 @@ description: Bagisto is a free and open-source Laravel e-commerce platform that 
   carts, and multi-channel selling. Built on Laravel Sanctum, the API offers both
   a public Storefront API and a full-control Admin API, making it suitable for headless
   commerce, mobile apps, and third-party integrations.
+deliveryModel:
+  model: open-core
+  license: MIT
+  open_source: true
+  commercial: true
+  callable_host: false
+  label: Open core · an OSS project plus a commercial hosted product
+  confidence: high
+  source:
+  - license
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: unknown
