@@ -2,24 +2,22 @@
   "repo": "bagisto",
   "feeds": [
     {
-      "source": "https://bagisto.com/en/feed/",
-      "feed_url": "https://bagisto.com/en/feed/",
-      "title": "",
-      "saved": 0,
-      "method": "feed",
-      "nature": "undetermined",
-      "nature_basis": null
-    },
-    {
       "source": "https://www.linkedin.com/company/bagisto/",
       "feed_url": "https://www.linkedin.com/company/bagisto/",
       "title": "",
       "saved": 0,
       "method": "none"
+    },
+    {
+      "source": "https://bagisto.com/en/feed/",
+      "feed_url": "https://bagisto.com/en/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
     }
   ],
-  "fetched": "2026-08-30T22:33:40Z",
-  "post_count": 42,
+  "fetched": "2026-09-06T19:17:18Z",
+  "post_count": 45,
   "feed_nature": "undetermined",
   "feed_nature_basis": null,
   "feed_nature_note": "Whether these posts are the vendor publishing or its support community, decided on the URL path grammar of the saved posts -- not the hostname, which carries both on Khoros, and not author diversity, which flags large vendor blogs as forums. 'undetermined' means undetermined."
