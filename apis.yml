@@ -42,7 +42,7 @@ x-docs-hosting: github-pages
 tags:
 - E-Commerce
 - Laravel
-- Open-Source
+- Open Source
 - Product
 - Order
 - Customers
@@ -59,6 +59,7 @@ tags_raw:
 - Inventory
 - Multi-Channel
 - Headless Commerce
+- Open-Source
 apis:
 - name: Bagisto REST API
   description: RESTful API for managing all Bagisto e-commerce operations including
