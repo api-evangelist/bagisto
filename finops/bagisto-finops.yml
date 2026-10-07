@@ -1,3 +1,11 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+# Coverage demoted 2026-10-07 (roadmap#942, PLAN.md Stage A): this file was written by an API Evangelist
+# sweep and names no billing unit, meters or pricing category read from the provider — it restates the
+# FinOps framework. It is `x-coverage: unmeasured`, and the FOCUS alignment it claimed has been removed.
+x-coverage: unmeasured
+method: generated
 name: Bagisto FinOps
 description: Bagisto is a free open-source platform (MIT license) with no direct API usage fees for self-hosted deployments. Cost drivers are infrastructure, optional commercial cloud hosting plans, and third-party extension purchases. API calls do not carry per-request charges on any plan.
 url: https://bagisto.com/en/cloud-hosting/

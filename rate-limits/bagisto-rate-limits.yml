@@ -1,3 +1,7 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
 name: Bagisto API Rate Limits
 description: Bagisto REST API rate limits apply per API key. Public Storefront API keys are subject to a default limit of 100 requests per minute. Admin API tokens and customer-scoped tokens may be configured by the hosting operator. Self-hosted deployments can customize rate limits via Laravel middleware.
 url: https://api-docs.bagisto.com/api/authentication

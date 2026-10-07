@@ -1,3 +1,7 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
 name: Bagisto Plans and Pricing
 description: Bagisto is a free and open-source Laravel e-commerce platform. The core platform is MIT-licensed and free to self-host. Commercial cloud-hosted managed plans are available for teams that want a fully managed deployment.
 url: https://bagisto.com/en/cloud-hosting/
