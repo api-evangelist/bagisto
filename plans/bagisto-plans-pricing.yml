@@ -45,3 +45,29 @@ plans:
       - Advanced email support
       - Paid migration assistance
       - REST API access
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - negotiated
+  units: []
+  plans:
+  - name: Open Source (Self-Hosted)
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: Starter Pack (Cloud)
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Pro Pack (Cloud)
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
