@@ -1,4 +1,4 @@
-# Bagisto (bagisto)
+# Bagisto
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,86 +66,109 @@
 
 Bagisto is a free and open-source Laravel e-commerce platform that provides REST and GraphQL APIs for managing products, categories, customers, orders, inventory, carts, and multi-channel selling. Built on Laravel Sanctum, the API offers both a public Storefront API and a full-control Admin API, making it suitable for headless commerce, mobile apps, and third-party integrations.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/bagisto/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/bagisto/refs/heads/main/apis.yml)
+**Areas:** E-Commerce · Laravel · Open Source · Product · Order · Customers · Inventory · Multi-Channel · Headless Commerce
 
-## Tags
+## Bagisto on APIs.io
 
-- E-Commerce
-- Laravel
-- Open Source
-- Products
-- Orders
-- Customers
-- Inventory
-- Multi-Channel
-- Headless Commerce
+Everything profiled for Bagisto is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/bagisto/](https://apis.io/providers/bagisto/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (2)
 
-- **Created:** 2026-06-13
-- **Modified:** 2026-06-13
+- [Bagisto REST API](https://apis.io/apis/bagisto/bagisto-rest-api/) — RESTful API for managing all Bagisto e-commerce operations including products, categories, customers, orders, inventory, cart, checkout, and administrative…
+- [Bagisto GraphQL API](https://apis.io/apis/bagisto/bagisto-graphql-api/) — GraphQL API for Bagisto providing flexible query-based access to storefront and catalog data as an alternative to the REST API.
 
-## APIs
+### Published properties
 
-### Bagisto REST API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-RESTful API for managing all Bagisto e-commerce operations including products, categories, customers, orders, inventory, cart, checkout, and administrative functions. Provides separate Shop and Admin API namespaces secured with Laravel Sanctum tokens.
+#### GraphQL (1)
 
-- **Human URL:** [https://api-docs.bagisto.com/api/rest-api/introduction.html](https://api-docs.bagisto.com/api/rest-api/introduction.html)
-- **Base URL:** `https://{your-domain}/api/`
+GraphQL schemas.
 
-#### Tags
+- [Bagisto GraphQL API](https://apis.io/graphqls/bagisto/bagisto-graphql/)
 
-- E-Commerce
-- Products
-- Orders
-- Customers
-- Inventory
-- Cart
-- REST
+#### Security (1)
 
-#### Properties
+Authentication, trust centre, and vulnerability disclosure.
 
-- [Documentation](https://api-docs.bagisto.com/api/rest-api/introduction.html)
-- [Authentication](https://api-docs.bagisto.com/api/authentication)
-- [OpenAPI](https://devdocs.bagisto.com/api/rest-api.html) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Bagisto Domain Security](https://apis.io/security/bagisto/bagisto-domain-security/)
 
-### Bagisto GraphQL API
+#### Plans and pricing (1)
 
-GraphQL API for Bagisto providing flexible query-based access to storefront and catalog data as an alternative to the REST API.
+Published plans, tiers and prices.
 
-- **Human URL:** [https://devdocs.bagisto.com/api/graphql-api](https://devdocs.bagisto.com/api/graphql-api)
-- **Base URL:** `https://{your-domain}/graphql`
+- [Bagisto Plans Pricing](https://apis.io/plans/bagisto/bagisto-plans-pricing/)
 
-#### Tags
+#### Rate limits (1)
 
-- E-Commerce
-- GraphQL
-- Products
-- Catalog
+Published request limits.
 
-#### Properties
+- [Bagisto Rate Limits](https://apis.io/rate-limits/bagisto/bagisto-rate-limits/)
 
-- [Documentation](https://devdocs.bagisto.com/api/graphql-api)
-- [Graph Q L](graphql/bagisto-graphql.md)
+#### FinOps (1)
 
-## Common Properties
+What the API costs to run, by operation.
+
+- [Bagisto Finops](https://apis.io/finops/bagisto/bagisto-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://bagisto.com/en/)
 - [Documentation](https://devdocs.bagisto.com/)
-- [Git Hub Org](https://github.com/bagisto)
-- [GitHub Repository](https://github.com/bagisto/bagisto)
-- [GitHub Repository](https://github.com/bagisto/rest-api)
-- [LinkedIn](https://www.linkedin.com/company/bagisto/)
-- [Blog](https://bagisto.com/en/blog/)
 - [Pricing](https://bagisto.com/en/cloud-hosting/)
-- [X (Twitter)](https://x.com/BagistoShop)
-- [Forum](https://forums.bagisto.com/)
-- [Plans](plans/bagisto-plans-pricing.yml)
-- [Rate Limits](rate-limits/bagisto-rate-limits.yml)
-- [Fin Ops](finops/bagisto-finops.yml)
+- [Blog](https://bagisto.com/en/blog/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 36.4** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 35.1 |
+| Contract governance | 0.0 |
+| Operational transparency | 39.5 |
+| Developer ergonomics | 28.6 |
+| Access clarity | 18.4 |
+
+**Agent readiness 16.1** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 11.8** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/bagisto/](https://apis.io/providers/bagisto/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Bagisto: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/bagisto/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
